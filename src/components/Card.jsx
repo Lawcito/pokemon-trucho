@@ -12,7 +12,7 @@ function Card({ pokemon }) {
     >
       <div className="w-2/4 h-1/4 bg-[#69715a] border-4 rounded-md border-[#28322a] m-4 pl-2">
         <div className="flex justify-between pr-4 pt-2">
-          <h2>{pokemon.name}</h2>
+          <h2>{pokemon.name.toUpperCase()}</h2>
           <p>Lv{pokemon.level}</p>
         </div>
         <div className="flex flex-row gap-2 items-center justify-end pr-4">

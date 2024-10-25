@@ -4,6 +4,7 @@ import { attack, startGame } from "./utils/function";
 import { useEffect, useState } from "react";
 import bgBattle from "./assets/battleBackground.jpg";
 import pokeIcon from "./assets/pokeball-icon.png";
+import background from "./assets/background.png";
 
 function App() {
   const [player, setPlayer] = useState(undefined);
@@ -13,6 +14,16 @@ function App() {
   const [attacker, setAttacker] = useState("");
   const [deffender, setDeffender] = useState("");
   const [winner, setWinner] = useState(undefined);
+
+  function startNewGame() {
+    let players = startGame(); // Asumo que `startGame` devuelve dos pokémon
+    setPlayer(players[0]);
+    setComputer(players[1]);
+    setWinner(undefined);
+    setLog("");
+    setAttacker("");
+    setIsPlaying(false);
+  }
 
   function damageDealt() {
     let playerDamage = attack(player, computer);
@@ -63,8 +74,12 @@ function App() {
     setComputer(players[1]);
   }, []);
 
+  useEffect(() => {
+    startNewGame(); // Inicia el juego al cargar
+  }, []);
+
   return (
-    <div className="font-bold">
+    <div className="font-bold bg-[#000]">
       {isPlaying && !winner ? (
         <div
           className="w-screen h-screen"
@@ -84,8 +99,15 @@ function App() {
             </div>
           </div>
           <div className="w-full h-1/4 flex">
-            <div className="w-1/4">
-              <button onClick={() => damageDealt()}>Attack</button>
+            <div className="w-1/4 border-4 rounded border-[#282d29] bg-[#fcfbfc]">
+              <div className="w-full h-full border-double border-r-8 border-l-8 border-[#91715a] items-center flex">
+                <button
+                  onClick={() => damageDealt()}
+                  className="w-2/4 text-[#4e4d52] hover:before:content-['➤'] hover:before:absolute hover:before:left-12"
+                >
+                  Attack
+                </button>
+              </div>
             </div>
             {/* Log */}
             <div className="w-3/4 border-4 rounded border-[#282d29] bg-[#fcfbfc]">
@@ -106,29 +128,32 @@ function App() {
           </div>
         </div>
       ) : !isPlaying && !winner ? (
-        <div className="w-screen h-screen bg-gradient-to-b from-[#ff0000] to-[#ffffff]">
-          <div className="flex justify-center items-center h-full">
-            <button
-              onClick={() => {
-                setIsPlaying(true);
-              }}
-              className=""
-            >
-              <img
-                src={pokeIcon}
-                alt=""
-                className="w-20 rounded-full animate-spin"
-              />
-            </button>
-          </div>
+        <div
+          className="h-screen"
+          style={{
+            background: `url(${background})`,
+            backgroundSize: "50%",
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center",
+          }}
+        >
+          <button
+            className="flex w-full h-full justify-center items-center animate-pulse text-white font-mono"
+            onClick={() => {
+              setIsPlaying(true);
+            }}
+          >
+            Presione la pantalla para comenzar
+          </button>
         </div>
       ) : (
-        <div className="w-screen h-screen bg-[]]">
+        <div className="h-screen">
           <div>
+            <p>{winner.name}</p>
+            <p>{winner != player ? <p>Has perdido</p> : <p>Has ganado</p>}</p>
             <button
-              onClick={() => {
-                setIsPlaying(false);
-              }}
+              onClick={startNewGame}
+              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
             >
               Continue
             </button>
