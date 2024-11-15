@@ -3,8 +3,11 @@ import Card from "./components/Card";
 import { attack, startGame } from "./utils/function";
 import { useEffect, useState } from "react";
 import bgBattle from "./assets/battleBackground.jpg";
-import pokeIcon from "./assets/pokeball-icon.png";
 import background from "./assets/background.png";
+import pikaWin from "./assets/pikachuWin.gif";
+import squirtWin from "./assets/squirtleWin.gif";
+import charWin from "./assets/charmanderWin.gif";
+import onixWin from "./assets/onixWin.gif";
 
 function App() {
   const [player, setPlayer] = useState(undefined);
@@ -12,7 +15,6 @@ function App() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [log, setLog] = useState("");
   const [attacker, setAttacker] = useState("");
-  const [deffender, setDeffender] = useState("");
   const [winner, setWinner] = useState(undefined);
 
   function startNewGame() {
@@ -147,13 +149,26 @@ function App() {
           </button>
         </div>
       ) : (
-        <div className="h-screen">
-          <div>
-            <p>{winner.name}</p>
-            <p>{winner != player ? <p>Has perdido</p> : <p>Has ganado</p>}</p>
+        <div className="h-screen bg-black flex justify-center items-center">
+          <div className="text 2xl m-32 items-center flex justify-center flex-col">
+            <p>El ganador es {winner.name}</p>
+            {winner.name == "charmander" ? (
+              <img className="w-40 h-40" src={charWin}></img>
+            ) : winner.name == "pikachu" ? (
+              <img className="w-40 h-40" src={pikaWin}></img>
+            ) : winner.name == "squirtle" ? (
+              <img className="w-40 h-40" src={squirtWin}></img>
+            ) : winner.name == "onix" ? (
+              <img className="w-40 h-40" src={onixWin}></img>
+            ) : (
+              false
+            )}
+            <div>
+              {winner != computer ? <p>Has ganado</p> : <p>Has perdido</p>}
+            </div>
             <button
               onClick={startNewGame}
-              className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+              className="mt-4 px-4 py-2 w-3/4 border-4 rounded border-[#282d29] bg-[#fcfbfc] text-[#4e4d52]"
             >
               Continue
             </button>
