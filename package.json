@@ -1,6 +1,7 @@
 {
   "name": "my-project",
   "private": true,
+  "homepage": "https://Lawcito.github.io/pokemon-trucho",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -12,6 +13,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "gh-pages": "^6.2.0",
     "my-project": "file:",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
